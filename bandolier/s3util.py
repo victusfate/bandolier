@@ -22,7 +22,7 @@ class S3:
 
   # method depends on aws cli installed locally
   def most_recent(self,under_path):
-    cmd_find = "aws s3 ls --recursive s3://" + AWS_BUCKET + '/' + under_path + " | sort -r | head -n 1 | awk '{print $4}'"
+    cmd_find = "aws s3 ls --recursive s3://" + self.bucket_name + '/' + under_path + " | sort -r | head -n 1 | awk '{print $4}'"
     return subprocess.check_output(cmd_find,stderr=subprocess.STDOUT,shell=True).decode('utf-8').strip()
 
   def get_s3_url(self,base):

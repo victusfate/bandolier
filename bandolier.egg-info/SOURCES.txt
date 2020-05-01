@@ -1,0 +1,13 @@
+README.md
+setup.cfg
+setup.py
+bandolier/__init__.py
+bandolier/constants.py
+bandolier/message_queue.py
+bandolier/s3util.py
+bandolier.egg-info/PKG-INFO
+bandolier.egg-info/SOURCES.txt
+bandolier.egg-info/dependency_links.txt
+bandolier.egg-info/not-zip-safe
+bandolier.egg-info/requires.txt
+bandolier.egg-info/top_level.txt
