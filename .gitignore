@@ -1,0 +1,9 @@
+.DS_Store
+model
+*.pyc
+__pycache__
+*.db
+jobs
+build/
+data/
+dist
