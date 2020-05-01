@@ -10,9 +10,11 @@ linux_pip = /usr/local/bin/pip3
 
 init :
 ifeq ($(OS), darwin)
+	pip uninstall -y bandolier
 	pip install -r requirements.txt
 endif
 ifeq ($(OS), linux)
+	$(linux_pip) uninstall -y bandolier
 	$(linux_pip) install -r requirements.txt --user
 endif
 
@@ -43,10 +45,18 @@ ifeq ($(OS), linux)
 endif
 
 deploy_dev: package
-	gsutil cp dist/rsyslog_cee*.tar.gz gs://welcome_dev/code
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_dev/code
 
 deploy_prod: package
-	gsutil cp dist/rsyslog_cee*.tar.gz gs://welcome_prod/code
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_prod/code
+
+clean :
+ifeq ($(OS), darwin)
+	pip uninstall -y bandolier
+endif
+ifeq  ($(OS), linux)
+	$(linux_pip) uninstall -y bandolier
+endif
 
 
 os :
