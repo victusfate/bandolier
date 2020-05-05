@@ -7,7 +7,7 @@ from sys import platform
 from typing import Optional
 
 class S3:
-  def __init__(self,bucket_name: str, profile_name: Optional[str], region_name: str):
+  def __init__(self,bucket_name: str, region_name: str, profile_name: Optional[str]):
     self.session = None
     if profile_name:
       self.session = boto3.Session(profile_name=profile_name,region_name=region_name)

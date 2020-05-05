@@ -10,14 +10,12 @@ def random_id():
   return '%08x' % random.getrandbits(32) + '_' + str(int(time.time()))
 
 class MessageQueue:
-  def __init__(self,name: str, env: str = constants.CONFIG['environment'], 
-    region: str = constants.CONFIG['aws']['region'], 
-    profile: str = constants.CONFIG['aws']['profile'] ):
+  def __init__(self,name: str, env: str, region_name: str, profile_name: str):
     
     self.name = name
     self.env  = env
-    self.region_name = region
-    self.profile_name = profile
+    self.region_name = region_name
+    self.profile_name = profile_name
     self.session = None
     
     if self.profile_name:

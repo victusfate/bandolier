@@ -7,7 +7,7 @@ from bandolier import constants
 from bandolier.s3util import S3
 
 # my local test 
-s3 = S3(bucket_name='dev.welco.me',profile_name='welco',region_name='us-east-1')
+s3 = S3(bucket_name='dev.welco.me',region_name='us-east-1',profile_name='welco')
 
 data = { 'hash' : 'something' }
 
