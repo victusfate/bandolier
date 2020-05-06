@@ -65,5 +65,15 @@ class S3:
       }
     )
 
+  def exists(self,key):
+    found = False
+    try:
+      object_summary = self.s3.ObjectSummary(self.bucket_name,key).load()
+      found = True
+    except Exception as err:
+      print('s3.exists err',err)
+      pass    
+    return found
+
   def all(self):
     return self.bucket.objects.all()
