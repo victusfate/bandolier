@@ -11,7 +11,7 @@ setup(
   license='MIT',
   packages=find_packages(),
   install_requires = [
-    'boto3',
+    'boto3==1.13.*',
     'requests==2.22.*'
   ],
   # package_data={'bandolier': ['bandolier/*.json']},
