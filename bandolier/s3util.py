@@ -6,6 +6,26 @@ import subprocess
 from sys import platform
 from typing import Optional
 
+# https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html
+# Canned ACL	Applies to	Permissions added to ACL
+# private	Bucket and object	Owner gets FULL_CONTROL. No one else has access rights (default).
+# public-read	Bucket and object	Owner gets FULL_CONTROL. The AllUsers group (see Who Is a Grantee?) gets READ access.
+# public-read-write	Bucket and object	Owner gets FULL_CONTROL. The AllUsers group gets READ and WRITE access. Granting this on a bucket is generally not recommended.
+# aws-exec-read	Bucket and object	Owner gets FULL_CONTROL. Amazon EC2 gets READ access to GET an Amazon Machine Image (AMI) bundle from Amazon S3.
+# authenticated-read	Bucket and object	Owner gets FULL_CONTROL. The AuthenticatedUsers group gets READ access.
+# bucket-owner-read	Object	Object owner gets FULL_CONTROL. Bucket owner gets READ access. If you specify this canned ACL when creating a bucket, Amazon S3 ignores it.
+# bucket-owner-full-control	Object	Both the object owner and the bucket owner get FULL_CONTROL over the object. If you specify this canned ACL when creating a bucket, Amazon S3 ignores it.
+
+ACL_PRIVATE                    = 'private'
+ACL_PUBLIC_READ                = 'public-read'
+ACL_PUBLIC_READ_WRITE          = 'public-read-write'
+ACL_AWS_EXEC_READ              = 'aws-exec-read'
+ACL_AUTHENTICATED_READ         = 'authenticated-read'
+ACL_BUCKET_OWNER_READ          = 'bucket-owner-read'
+ACL_BUCKET_OWNER_FULL_CONTROL  = 'bucket-owner-full-control'
+
+DEFAULT_ACL = ACL_PRIVATE
+
 class S3:
   def __init__(self,bucket_name: str, region_name: str, profile_name: Optional[str]):
     self.session = None
@@ -28,19 +48,20 @@ class S3:
   def get_s3_url(self,base):
     return 's3://' + self.bucket_name + '/' + base
 
-  def put_data(self,data,destination,content_type='application/octet-stream'):
+  def put_data(self,data,destination,content_type='application/octet-stream',acl=DEFAULT_ACL):
     return self.bucket.put_object(
-      ACL='bucket-owner-full-control',
+      ACL=acl,
       Body=data,
       Key=destination,
       ContentType = content_type
     )
 
-  def put(self,local,destination,content_type='application/octet-stream'):
+  def put(self,local,destination,content_type='application/octet-stream',acl=DEFAULT_ACL):
     return self.bucket.upload_file(
       local,
       destination,
       ExtraArgs={
+          'ACL': acl,
           'ContentType' : content_type
       })
 
@@ -68,7 +89,7 @@ class S3:
   def exists(self,key):
     found = False
     try:
-      object_summary = self.s3.ObjectSummary(self.bucket_name,key).load()
+      _ = self.s3.ObjectSummary(self.bucket_name,key).load()
       found = True
     except Exception as err:
       print('s3.exists err',err)
