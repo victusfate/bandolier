@@ -31,6 +31,7 @@ def fetch_url(url:str,local_file:str):
     local_buffer = open(local_file, 'wb')
     shutil.copyfileobj(response.raw, local_buffer)
     del response
+    local_buffer.close()
     return True
   except Exception as err:
     # TODO convert print to log.err
