@@ -27,11 +27,15 @@ def sha1_file(path_to_file: str):
 # returns if file successfully fetched
 def fetch_url(url:str,local_file:str):
   try:
-    response = requests.get(url, stream=True)
-    local_buffer = open(local_file, 'wb')
-    shutil.copyfileobj(response.raw, local_buffer)
-    del response
-    local_buffer.close()
+    response = requests.get(url)
+    file = open(local_file, 'wb')
+    file.write(response.content)
+    file.close()    
+    # response = requests.get(url, stream=True)
+    # local_buffer = open(local_file, 'wb')
+    # shutil.copyfileobj(response.raw, local_buffer)
+    # del response
+    # local_buffer.close()
     return True
   except Exception as err:
     # TODO convert print to log.err
