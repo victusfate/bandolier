@@ -3,6 +3,7 @@ setup.cfg
 setup.py
 bandolier/__init__.py
 bandolier/constants.py
+bandolier/graceful_exit.py
 bandolier/hash.py
 bandolier/message_queue.py
 bandolier/processify.py
