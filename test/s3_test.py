@@ -24,7 +24,7 @@ print('get_data foo.txt')
 print(s3.get_data('test/foo.txt'))
 print('foo.txt exists?',s3.exists('test/foo.txt'))
 print('doesNotExists.txt exists?',s3.exists('test/doesNotExists.txt'))
-print('end get_data foo.txt\n\n\n')
+print('\nend get_data foo.txt\n\n\n')
 s3.get('test/foo.txt','/tmp/foo.txt')
 print('get_data stuff.json',s3.get_data('test/stuff.json'))
 s3.get('test/stuff.json','/tmp/stuff.json')
@@ -33,10 +33,34 @@ print('contents of uploaded/downloaded foo.txt')
 os.system('cat /tmp/foo.txt')
 print('contents of uploaded/downloaded stuff.json')
 os.system('cat /tmp/stuff.json')
-print('end contents cat\n\n\n')
+print('\nend contents cat\n\n\n')
 
 most_recent = s3.most_recent('test')
 print('most recent object',most_recent)
+
+
+os.system('rm /tmp/stuff.json')
+
+s3_url = 's3://dev.welco.me/test/stuff.json'
+http_url = 'https://s3.amazonaws.com/dev.welco.me/test/stuff.json'
+print(s3.parse_s3_url(s3_url))
+s3.get_s3_file(s3_url,'/tmp/stuff.json')
+os.system('cat /tmp/stuff.json')
+print('\nend contents cat\n\n\n')
+
+os.system('rm /tmp/stuff.json')
+
+s3.fetch_http_or_s3_file(s3_url,'/tmp/stuff.json')
+print('fetch_http_or_s3_file s3_url',s3_url,' to /tmp/stuff.json')
+os.system('cat /tmp/stuff.json')
+print('\nend contents cat\n\n\n')
+os.system('rm /tmp/stuff.json')
+
+s3.fetch_http_or_s3_file(http_url,'/tmp/stuff.json')
+print('fetch_http_or_s3_file http_url',http_url,' to /tmp/stuff.json')
+os.system('cat /tmp/stuff.json')
+print('\nend contents cat\n\n\n')
+os.system('rm /tmp/stuff.json')
 
 s3.remove('test/foo.txt') 
 s3.remove('test/stuff.json')

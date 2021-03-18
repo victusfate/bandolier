@@ -6,6 +6,10 @@ import subprocess
 from sys import platform
 from typing import Optional
 
+import urllib
+from urllib.parse import urlparse
+
+
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html
 # Canned ACL	Applies to	Permissions added to ACL
 # private	Bucket and object	Owner gets FULL_CONTROL. No one else has access rights (default).
@@ -48,6 +52,13 @@ class S3:
   def get_s3_url(self,base):
     return 's3://' + self.bucket_name + '/' + base
 
+  def parse_s3_url(self,s3_url):
+    parsed_s3_url = urlparse(s3_url)
+    bucket = parsed_s3_url.netloc
+    key = parsed_s3_url.path  
+    key = key.lstrip('/')
+    return { 'bucket': bucket, 'key': key }
+
   def put_data(self,data,destination,content_type='application/octet-stream',acl=DEFAULT_ACL):
     return self.bucket.put_object(
       ACL=acl,
@@ -67,6 +78,17 @@ class S3:
 
   def get(self,remote,local):
     return self.bucket.download_file(remote,local)
+
+  def get_s3_file(self,s3_url,local):
+    parsed = self.parse_s3_url(s3_url)
+    temp_bucket = self.s3.Bucket(parsed['bucket'])
+    return temp_bucket.download_file(parsed['key'],local)
+
+  def fetch_http_or_s3_file(self,file_url,local):  
+    if 's3://' in file_url:
+      return self.get_s3_file(file_url,local)
+    else:  
+      return urllib.request.urlretrieve(file_url, local)
 
   # returns contents of s3 object
   def get_data(self,remote,encoding='utf-8'):
