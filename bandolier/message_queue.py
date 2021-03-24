@@ -20,7 +20,7 @@ class MessageQueue:
     self.session = None
     
     if aws_key and aws_secret:
-      self.session = boto3.Session(aws_access_key_id=aws_key,aws_secret_access_key=aws_secret)
+      self.session = boto3.Session(region_name=self.region_name,aws_access_key_id=aws_key,aws_secret_access_key=aws_secret)
     elif self.profile_name:
       self.session = boto3.Session(profile_name=self.profile_name,region_name=self.region_name)
     else:
