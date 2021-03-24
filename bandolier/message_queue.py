@@ -11,7 +11,7 @@ def random_id():
   return '%08x' % random.getrandbits(32) + '_' + str(int(time.time()))
 
 class MessageQueue:
-  def __init__(self,name: str, env: str, region_name: str, profile_name: Optional[str], aws_key: Optional[str], aws_secret: Optional[str]):
+  def __init__(self,name: str, env: str, region_name: str, profile_name: Optional[str], aws_key: Optional[str] = None, aws_secret: Optional[str] = None):
     
     self.name = name
     self.env  = env

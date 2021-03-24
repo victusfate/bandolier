@@ -31,7 +31,7 @@ ACL_BUCKET_OWNER_FULL_CONTROL  = 'bucket-owner-full-control'
 DEFAULT_ACL = ACL_PRIVATE
 
 class S3:
-  def __init__(self,bucket_name: str, region_name: str, profile_name: Optional[str], aws_key: Optional[str], aws_secret: Optional[str]):
+  def __init__(self,bucket_name: str, region_name: str, profile_name: Optional[str], aws_key: Optional[str] = None, aws_secret: Optional[str] = None):
     self.session = None
     if aws_key and aws_secret:
       self.session = boto3.Session(region_name=self.region_name,aws_access_key_id=aws_key,aws_secret_access_key=aws_secret)
