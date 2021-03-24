@@ -4,13 +4,14 @@ from sys import platform
 import time
 import random
 import boto3
+from typing import Optional
 from . import constants
 
 def random_id():
   return '%08x' % random.getrandbits(32) + '_' + str(int(time.time()))
 
 class MessageQueue:
-  def __init__(self,name: str, env: str, region_name: str, profile_name: str):
+  def __init__(self,name: str, env: str, region_name: str, profile_name: Optional[str], aws_key: Optional[str], aws_secret: Optional[str]):
     
     self.name = name
     self.env  = env
@@ -18,7 +19,9 @@ class MessageQueue:
     self.profile_name = profile_name
     self.session = None
     
-    if self.profile_name:
+    if aws_key and aws_secret:
+      self.session = boto3.Session(aws_access_key_id=aws_key,aws_secret_access_key=aws_secret)
+    elif self.profile_name:
       self.session = boto3.Session(profile_name=self.profile_name,region_name=self.region_name)
     else:
       self.session = boto3.Session(region_name=self.region_name)
