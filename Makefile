@@ -44,11 +44,18 @@ ifeq ($(OS), linux)
 	$(linux_python) setup.py sdist bdist_wheel
 endif
 
-deploy_dev: package
-	gsutil cp dist/bandolier*.tar.gz gs://welcome_dev/code
+deploy_local: package
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_local/code/bandolier-0.1.0.tar.gz
 
-deploy_prod: package
-	gsutil cp dist/bandolier*.tar.gz gs://welcome_prod/code
+deploy_d2: package
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_d2/code/bandolier-0.1.0.tar.gz
+
+deploy_s2: package
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_s2/code/bandolier-0.1.0.tar.gz
+
+deploy_p2: package
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_p2/code/bandolier-0.1.0.tar.gz
+
 
 clean :
 ifeq ($(OS), darwin)
