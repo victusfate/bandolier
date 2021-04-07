@@ -4,7 +4,10 @@ def consul_to_dict(consul_list):
   d2 = {}
   if consul_list:
     for obj in consul_list:
-      d2[obj['Key']] = obj['Value'].decode()
+      if 'Value' in obj and obj['Value']:
+        d2[obj['Key']] = obj['Value'].decode()
+      else:
+        print('consul key without value',obj)
   return d2
 
 def flat_to_nested(d1,delimiter='/'):
