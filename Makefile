@@ -56,6 +56,7 @@ deploy_s2: package
 deploy_p2: package
 	gsutil cp dist/bandolier*.tar.gz gs://welcome_p2/code/bandolier-0.1.0.tar.gz
 
+deploy_gcs: deploy_local deploy_d2 deploy_s2 deploy_p2
 
 clean :
 ifeq ($(OS), darwin)
