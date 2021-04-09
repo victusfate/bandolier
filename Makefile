@@ -50,13 +50,13 @@ deploy_local: package
 deploy_d2: package
 	gsutil cp dist/bandolier*.tar.gz gs://welcome_d2/code/bandolier-0.1.0.tar.gz
 
-deploy_s2: package
-	gsutil cp dist/bandolier*.tar.gz gs://welcome_s2/code/bandolier-0.1.0.tar.gz
+deploy_beta: package
+	gsutil cp dist/bandolier*.tar.gz gs://welcome_beta/code/bandolier-0.1.0.tar.gz
 
-deploy_p2: package
-	gsutil cp dist/bandolier*.tar.gz gs://welcome_p2/code/bandolier-0.1.0.tar.gz
+# deploy_p2: package
+# 	gsutil cp dist/bandolier*.tar.gz gs://welcome_p2/code/bandolier-0.1.0.tar.gz
 
-deploy_gcs: deploy_local deploy_d2 deploy_s2 deploy_p2
+deploy_gcs: deploy_local deploy_d2 deploy_beta
 
 clean :
 ifeq ($(OS), darwin)
