@@ -7,6 +7,7 @@ bandolier/data_tools.py
 bandolier/graceful_exit.py
 bandolier/hash.py
 bandolier/message_queue.py
+bandolier/nomad_tools.py
 bandolier/processify.py
 bandolier/s3util.py
 bandolier.egg-info/PKG-INFO
