@@ -1,6 +1,7 @@
 from bandolier.nomad_tools import NomadWrapper
 
-nw = NomadWrapper(url='http://localhost:4646')
+# nw = NomadWrapper(url='http://localhost:4646')
+nw = NomadWrapper(url='http://nomad.d2.welco.me:4646')
 allocations = nw.allocations('recommender')
 # print('allocations',allocations)
 alloc_ids = []
