@@ -3,8 +3,10 @@ import json
 import boto3
 import sys
 import subprocess
+import time
 from sys import platform
 from typing import Optional
+
 
 import urllib
 from urllib.parse import urlparse
@@ -81,12 +83,15 @@ class S3:
   def get(self,remote,local,retries=0):
     iattempt = 0
     resp = None
-    while iattempt <= retries:
+    fetched = False
+    while not fetched and iattempt <= retries:
       iattempt += 1
       try:
         resp = self.bucket.download_file(remote,local)
+        fetched = True
       except Exception as e:
         raise e
+      time.sleep(1)
     return resp
 
   def get_s3_file(self,s3_url,local,retries=0):
@@ -94,12 +99,15 @@ class S3:
     temp_bucket = self.s3.Bucket(parsed['bucket'])
     iattempt = 0
     resp = None
-    while iattempt <= retries:
+    fetched = False
+    while not fetched and iattempt <= retries:
       iattempt += 1
       try:
         resp = temp_bucket.download_file(parsed['key'],local)
+        fetched = True
       except Exception as e:
         raise e
+      time.sleep(1)
     return resp
 
   def fetch_http_or_s3_file(self,file_url,local,retries=0):  
