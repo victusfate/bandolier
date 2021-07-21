@@ -116,10 +116,12 @@ class S3:
     else:  
       iattempt = 0
       resp = None
-      while iattempt <= retries:
+      fetched = False
+      while not fetched and iattempt <= retries:
         iattempt += 1
         try:
           resp = urllib.request.urlretrieve(file_url, local)
+          fetched = True
         except Exception as e:
           raise e
       return resp 
