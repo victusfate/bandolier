@@ -78,19 +78,43 @@ class S3:
           'ContentType' : content_type
       })
 
-  def get(self,remote,local):
-    return self.bucket.download_file(remote,local)
+  def get(self,remote,local,retries=0):
+    iattempt = 0
+    resp = None
+    while iattempt <= retries:
+      iattempt += 1
+      try:
+        resp = self.bucket.download_file(remote,local)
+      except Exception as e:
+        raise e
+    return resp
 
-  def get_s3_file(self,s3_url,local):
+  def get_s3_file(self,s3_url,local,retries=0):
     parsed = self.parse_s3_url(s3_url)
     temp_bucket = self.s3.Bucket(parsed['bucket'])
-    return temp_bucket.download_file(parsed['key'],local)
+    iattempt = 0
+    resp = None
+    while iattempt <= retries:
+      iattempt += 1
+      try:
+        resp = temp_bucket.download_file(parsed['key'],local)
+      except Exception as e:
+        raise e
+    return resp
 
-  def fetch_http_or_s3_file(self,file_url,local):  
+  def fetch_http_or_s3_file(self,file_url,local,retries=0):  
     if 's3://' in file_url:
-      return self.get_s3_file(file_url,local)
+      return self.get_s3_file(file_url,local,retries)
     else:  
-      return urllib.request.urlretrieve(file_url, local)
+      iattempt = 0
+      resp = None
+      while iattempt <= retries:
+        iattempt += 1
+        try:
+          resp = urllib.request.urlretrieve(file_url, local)
+        except Exception as e:
+          raise e
+      return resp 
 
   # returns contents of s3 object
   def get_data(self,remote,encoding='utf-8'):
