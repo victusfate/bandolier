@@ -12,7 +12,8 @@ setup(
   packages=find_packages(),
   install_requires = [
     'boto3==1.13.*',
-    'requests==2.22.*'
+    'requests>=2.22.0,<3.0.0',
+    'requests-oauthlib>=1.3.0,<2.0.0'
   ],
   # package_data={'bandolier': ['bandolier/*.json']},
   zip_safe=False

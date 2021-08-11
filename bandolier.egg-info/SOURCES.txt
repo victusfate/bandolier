@@ -2,6 +2,7 @@ README.md
 setup.cfg
 setup.py
 bandolier/__init__.py
+bandolier/auth.py
 bandolier/constants.py
 bandolier/data_tools.py
 bandolier/graceful_exit.py
