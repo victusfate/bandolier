@@ -8,7 +8,7 @@ def get_token(auth_url,client_id,client_secret,scope):
     'client_secret': client_secret,
     'scope': scope
   })
-  print('response',r.json())
+  # print('response',r.json())
   data = r.json()
   token = None
   expires_in = None
