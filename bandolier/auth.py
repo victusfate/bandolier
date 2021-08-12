@@ -11,6 +11,9 @@ def get_token(auth_url,client_id,client_secret,scope):
   print('response',r.json())
   data = r.json()
   token = None
+  expires_in = None
   if 'access_token' in data:
     token = data['access_token']
-  return token
+  if 'expires_in' in data:
+    expires_in = data['expires_in']
+  return token,expires_in
