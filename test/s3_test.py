@@ -9,11 +9,14 @@ from bandolier.s3util import S3
 # bucket_name = 'internal.dev.welco.me'
 # acl = s3util.ACL_BUCKET_OWNER_FULL_CONTROL
 
-bucket_name = 'd2.welco.me'
+bucket_name = 'welcome.local'
 acl = s3util.ACL_PUBLIC_READ
 
 # my local test 
 s3 = S3(bucket_name=bucket_name,region_name='us-east-1',profile_name='welco')
+# os.system('mkdir -p /tmp/als_model')
+# s3.get('recommender/als_models/als_latest/als_model.sav','/tmp/als_model/als_model.sav')
+# exit(0)
 
 data = { 'hash' : 'something' }
 
@@ -41,8 +44,8 @@ print('most recent object',most_recent)
 
 os.system('rm /tmp/stuff.json')
 
-s3_url = 's3://d2.welco.me/test/stuff.json'
-http_url = 'https://s3.amazonaws.com/d2.welco.me/test/stuff.json'
+s3_url = 's3://welcome.local/test/stuff.json'
+http_url = 'https://s3.amazonaws.com/welcome.local/test/stuff.json'
 print(s3.parse_s3_url(s3_url))
 s3.get_s3_file(s3_url,'/tmp/stuff.json')
 os.system('cat /tmp/stuff.json')
