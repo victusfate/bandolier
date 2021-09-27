@@ -54,7 +54,8 @@ class NomadWrapper :
     # first fetch job
     get_job_url = self.base_url + os.path.join('/v1/job',job_id)
     get_job_response = requests.get(get_job_url)
-    job = get_job_response.json()
+    jobs = get_job_response.json()
+    job = { 'Job': jobs[0] }
     
     # now post it back
     post_url = self.base_url + os.path.join('/v1/jobs')
