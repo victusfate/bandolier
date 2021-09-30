@@ -50,15 +50,3 @@ class NomadWrapper :
       time.sleep(sleep_between_restarts)
     return results
 
-  def restart_job(self,job_id):
-    # first fetch job
-    get_job_url = self.base_url + os.path.join('/v1/job',job_id)
-    get_job_response = requests.get(get_job_url)
-    job = get_job_response.json()
-    job = { 'Job': job }
-    
-    # now post it back
-    post_url = self.base_url + os.path.join('/v1/jobs')
-    post_job_response = requests.post(post_url,json=job)
-    print('restart job response',post_job_response.json())
-    return post_job_response.json()
