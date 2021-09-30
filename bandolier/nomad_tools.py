@@ -55,17 +55,9 @@ class NomadWrapper :
     get_job_url = self.base_url + os.path.join('/v1/job',job_id)
     get_job_response = requests.get(get_job_url)
     job = get_job_response.json()
-    if 'TaskGroups' in job:
-      task_groups = job['TaskGroups']
-      for i,task_group in enumerate(task_groups):
-        if 'Tasks' in task_group:
-          tasks = task_group['Tasks']
-          for j,task in enumerate(tasks):
-            if 'Env' not in task:
-              task['Env'] = {}
-            task['Env']['RESTART_TIME'] = '"' + time.time() + '"'
-            task_group['Tasks'][j] = task
-          job['TaskGroups'][i] = task_group
+    if 'Meta' not in job or job['Meta'] is None:
+      job['Meta'] = {}
+    job['Meta']['Restart'] = str(time.time())
     job = { 'Job': job, 'PreserveCounts': True }
     
     # now post it back
