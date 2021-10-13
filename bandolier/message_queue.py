@@ -82,14 +82,17 @@ class MessageQueue:
     queue.purge()
 
 
-  def create_queue(self):
+  def create_queue(self,is_fifo = False):
+    # 'DelaySeconds': '0',
+    # 'MessageRetentionPeriod': '86400',
+    # 'FifoQueue': 'true',
+    # 'ContentBasedDeduplication': 'true'
+    attr = {}
+    if is_fifo:
+      attr = {
+        'FifoQueue' : 'true',
+        'ContentBasedDeduplication': 'false'
+      }
     self.sqs.create_queue(
       QueueName=self.queue_name,
-      Attributes={
-          'FifoQueue'                 : 'true',  # Allows for deduplication ids
-          'ContentBasedDeduplication' : 'false'        
-          # 'DelaySeconds': '0',
-          # 'MessageRetentionPeriod': '86400',
-          # 'FifoQueue': 'true',
-          # 'ContentBasedDeduplication': 'true'
-      })
+      Attributes=attr)
