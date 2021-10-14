@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 1.0
 Name: bandolier
 Version: 0.1.0
 Summary: yet another python utility library
@@ -6,8 +6,5 @@ Home-page: https://github.com/victusfate/bandolier
 Author: victusfate
 Author-email: messel@gmail.com
 License: MIT
+Description: UNKNOWN
 Platform: UNKNOWN
-License-File: LICENSE.txt
-
-UNKNOWN
-
