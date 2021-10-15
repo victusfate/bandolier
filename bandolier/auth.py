@@ -9,7 +9,8 @@ def get_token(auth_url,headers,client_id,client_secret,scope):
       'grant_type': 'client_credentials',
       'client_secret': client_secret,
       'scope': scope
-    }
+    },
+    timeout=60
   )
   # print('response',r.json())
   data = r.json()
